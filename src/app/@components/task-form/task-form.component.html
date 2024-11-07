@@ -1,0 +1,94 @@
+<section id="task-form">
+  <div class="form-header">
+    <p class="salutation">Welcome {{ name }}!</p>
+    <p class="message">
+      Input your required tasks and manage them as you like!
+    </p>
+  </div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="d-flex flex-column gap-3">
+      <div class="input-style1 input-xl">
+        <mat-form-field appearance="outline" [style.width.%]="100">
+          <input
+            matInput
+            type="text"
+            inputmode="text"
+            placeholder="Enter title"
+            formControlName="title"
+          />
+
+          <mat-error *ngIf="taskFormControls['title'].invalid">
+            {{ getErrorMessage("title") }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-style1 input-xl">
+        <mat-form-field appearance="outline" [style.width.%]="100">
+          <textarea
+            matInputtype="text"
+            placeholder="Enter Description"
+            formControlName="description"
+          ></textarea>
+
+          <mat-error *ngIf="taskFormControls['description'].invalid">
+            {{ getErrorMessage("description") }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-style1 input-xl">
+        <mat-form-field appearance="outline" [style.width.%]="100">
+          <input
+            matInput
+            type="date"
+            placeholder="Due Date"
+            formControlName="dueDate"
+          />
+
+          <mat-error *ngIf="taskFormControls['dueDate'].invalid">
+            {{ getErrorMessage("dueDate") }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="input-style1 input-xl col-12">
+        <select
+          placeholder="Select Priority"
+          formControlName="priority"
+          class="form-control form-control-lg"
+        >
+          <ng-container *ngFor="let item of priorities">
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+
+      <div class="input-style1 input-xl col-12">
+        <select
+          placeholder="Select Status"
+          formControlName="status"
+          class="form-control form-control-lg"
+        >
+          <ng-container *ngFor="let item of statuses">
+            <option [value]="item.value">
+              {{ item.label }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+
+      <button
+        matRipple
+        class="btn btn-primary btn-lg mt-1"
+        type="submit"
+        [disabled]="taskForm.invalid"
+      >
+        Add Task
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,32 @@
+<section id="welcome">
+  <div class="page">
+    <p class="title">Welcome To Coure Task Manager</p>
+
+    <div class="body">
+      <form [formGroup]="welcomeForm" class="w-100">
+        <div class="d-flex flex-column gap-3">
+          <div class="input-style1 input-xl">
+            <mat-form-field appearance="outline" [style.width.%]="100">
+              <input
+                matInput
+                type="text"
+                inputmode="text"
+                placeholder="Enter Name"
+                formControlName="name"
+              />
+            </mat-form-field>
+          </div>
+
+          <button
+            matRipple
+            class="btn btn-primary btn-lg mt-1"
+            (click)="submitForm()"
+            [disabled]="welcomeForm.invalid"
+          >
+            Proceed
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
