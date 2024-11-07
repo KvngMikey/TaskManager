@@ -1,0 +1,53 @@
+<section id="task-list" class="container">
+  <app-task-form />
+
+  <div class="list-section">
+    <ng-container *ngIf="tasks.length > 0; else noTasks">
+      <div *ngFor="let task of tasks" class="task-card">
+        <div>
+          <h5>Title</h5>
+          <p>{{ task.title }}</p>
+        </div>
+
+        <div>
+          <h5>Description</h5>
+          <p>{{ task.description }}</p>
+        </div>
+
+        <div>
+          <h5>Due Date</h5>
+          <p>{{ task.dueDate | date }}</p>
+        </div>
+
+        <div>
+          <h5>Priority</h5>
+          <p>{{ task.priority }}</p>
+        </div>
+
+        <div>
+          <h5>Status</h5>
+          <p
+            [ngClass]="{
+              'text-success': task.status.toLocaleLowerCase() === 'completed',
+              'text-warning': task.status.toLocaleLowerCase() === 'pending',
+              'text-primary': task.status.toLocaleLowerCase() === 'in progress'
+            }"
+          >
+            {{ task.status }}
+          </p>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" (click)="editTask(task)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteTask(task)">
+            Delete
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-template #noTasks>
+    <p>No tasks available.</p>
+  </ng-template>
+</section>
