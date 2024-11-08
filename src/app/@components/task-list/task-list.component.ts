@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TaskListComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
+  selectedTask?: Task;
   selectedStatus: string = '';
   selectedPriority: string = '';
   filteredTasks: Task[] = [];
@@ -53,12 +54,17 @@ export class TaskListComponent implements OnInit, OnDestroy {
   }
 
   editTask(task: Task): void {
-    this.taskService.updateTask(task);
-    this.loadTasks();
+    this.selectedTask = task;
   }
 
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task.id);
+    this.loadTasks();
+  }
+
+  onTaskUpdated(updatedTask: Task) {
+    this.taskService.updateTask(updatedTask);
+    this.selectedTask = undefined; // Reset selected task after edit
     this.loadTasks();
   }
 

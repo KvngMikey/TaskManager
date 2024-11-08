@@ -1,6 +1,11 @@
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormGroup,
@@ -17,16 +22,15 @@ import { v4 as uuidv4 } from 'uuid';
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class TaskFormComponent {
+export class TaskFormComponent implements OnChanges {
+  @Input() taskToEdit?: Task;
+  @Output() taskUpdated = new EventEmitter<Task>();
+
   name: string | null = '';
   taskForm!: FormGroup;
 
@@ -62,6 +66,12 @@ export class TaskFormComponent {
 
   constructor(private fb: FormBuilder, private taskService: TaskService) {
     this.createTaskForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.taskToEdit) {
+      this.taskForm.patchValue(this.taskToEdit);
+    }
   }
 
   createTaskForm() {
@@ -104,12 +114,19 @@ export class TaskFormComponent {
     }
   }
 
+
   onSubmit() {
-    const newTask: Task = {
-      id: uuidv4(), // Generates a unique ID for the new task
+    const updatedTask: Task = {
+      id: this.taskToEdit?.id || uuidv4(), // Use existing ID for editing, or generate a new one for new tasks
       ...this.taskForm.value,
     };
-    this.taskService.addTask(newTask);
+
+    if (this.taskToEdit) {
+      this.taskUpdated.emit(updatedTask); // Emit updated task
+    } else {
+      this.taskService.addTask(updatedTask);
+    }
+
     this.taskForm.reset();
   }
 }

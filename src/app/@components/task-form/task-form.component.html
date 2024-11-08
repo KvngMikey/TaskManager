@@ -91,7 +91,7 @@
         type="submit"
         [disabled]="taskForm.invalid"
       >
-        Add Task
+        {{ taskToEdit ? "Save Changes" : "Add Task" }}
       </button>
     </div>
   </form>

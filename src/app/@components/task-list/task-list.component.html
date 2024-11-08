@@ -1,5 +1,8 @@
 <section id="task-list" class="container">
-  <app-task-form />
+  <app-task-form
+    [taskToEdit]="selectedTask"
+    (taskUpdated)="onTaskUpdated($event)"
+  />
 
   <div class="list-section">
     <div class="d-flex gap-2 mb-2">
