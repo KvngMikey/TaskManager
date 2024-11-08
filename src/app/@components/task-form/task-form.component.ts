@@ -66,7 +66,7 @@ export class TaskFormComponent {
 
   createTaskForm() {
     if (typeof sessionStorage !== 'undefined') {
-      this.name = sessionStorage.getItem('name');
+      this.name = sessionStorage.getItem('userName');
     }
 
     this.taskForm = this.fb.group({

@@ -6,18 +6,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatRippleModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
   standalone: true,
   imports: [
-    // MatFormFieldModule,
-    // MatInputModule,
-    // MatRippleModule,
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -46,7 +40,7 @@ export class WelcomeComponent implements OnInit {
 
   submitForm() {
     const name = this.welcomeForm.value.name;
-    sessionStorage.setItem('userName', name); // Save userName to sessionStorage
+    sessionStorage.setItem('userName', name);
     this.router.navigate(['/tasks']);
   }
 }

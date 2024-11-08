@@ -11,11 +11,15 @@ export class TaskService {
   tasks$ = this.tasksSubject.asObservable();
 
   private getTasks(): Task[] {
-    return JSON.parse(localStorage.getItem(this.tasksKey) || '[]');
+    if (typeof sessionStorage !== 'undefined') {
+      return JSON.parse(sessionStorage.getItem(this.tasksKey) || '[]');
+    } else {
+      return [];
+    }
   }
 
   private saveTasks(tasks: Task[]): void {
-    localStorage.setItem(this.tasksKey, JSON.stringify(tasks));
+    sessionStorage.setItem(this.tasksKey, JSON.stringify(tasks));
     this.tasksSubject.next(tasks); // Emit the new tasks list
   }
 
